@@ -1,0 +1,110 @@
+2023-03-19 00:07:36.750 +01:00 [INF] Registered 5 endpoints in 232 milliseconds.
+2023-03-19 00:07:36.914 +01:00 [INF] User profile is available. Using 'C:\Users\ahmed-med.lahmar\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-03-19 00:07:37.887 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+PRAGMA journal_mode = 'wal';
+2023-03-19 00:07:38.026 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Contributors" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Contributors" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NOT NULL
+);
+2023-03-19 00:07:38.030 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Projects" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Projects" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NOT NULL,
+    "Priority" INTEGER NOT NULL
+);
+2023-03-19 00:07:38.035 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "ToDoItems" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_ToDoItems" PRIMARY KEY AUTOINCREMENT,
+    "Title" TEXT NOT NULL,
+    "Description" TEXT NOT NULL,
+    "ContributorId" INTEGER NULL,
+    "IsDone" INTEGER NOT NULL,
+    "ProjectId" INTEGER NULL,
+    CONSTRAINT "FK_ToDoItems_Projects_ProjectId" FOREIGN KEY ("ProjectId") REFERENCES "Projects" ("Id")
+);
+2023-03-19 00:07:38.045 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ToDoItems_ProjectId" ON "ToDoItems" ("ProjectId");
+2023-03-19 00:07:38.294 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "ToDoItems" AS "t")
+2023-03-19 00:07:38.359 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "p"."Id", "p"."Name", "p"."Priority"
+FROM "Projects" AS "p"
+2023-03-19 00:07:38.369 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "t"."Id", "t"."ContributorId", "t"."Description", "t"."IsDone", "t"."ProjectId", "t"."Title"
+FROM "ToDoItems" AS "t"
+2023-03-19 00:07:38.377 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "c"."Id", "c"."Name"
+FROM "Contributors" AS "c"
+2023-03-19 00:07:38.581 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 7)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name")
+VALUES (@p0)
+RETURNING "Id";
+2023-03-19 00:07:38.609 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 8)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name")
+VALUES (@p0)
+RETURNING "Id";
+2023-03-19 00:07:38.721 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 12), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Projects" ("Name", "Priority")
+VALUES (@p0, @p1)
+RETURNING "Id";
+2023-03-19 00:07:38.736 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@p2='?' (DbType = Int32), @p3='?' (Size = 31), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (Size = 18)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "ToDoItems" ("ContributorId", "Description", "IsDone", "ProjectId", "Title")
+VALUES (@p2, @p3, @p4, @p5, @p6)
+RETURNING "Id";
+2023-03-19 00:07:38.742 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 81), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (Size = 15)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "ToDoItems" ("ContributorId", "Description", "IsDone", "ProjectId", "Title")
+VALUES (@p0, @p1, @p2, @p3, @p4)
+RETURNING "Id";
+2023-03-19 00:07:38.747 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 59), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (Size = 20)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "ToDoItems" ("ContributorId", "Description", "IsDone", "ProjectId", "Title")
+VALUES (@p0, @p1, @p2, @p3, @p4)
+RETURNING "Id";
+2023-03-19 00:07:38.795 +01:00 [INF] Creating key {52c78544-f5db-4edd-a954-b164582af421} with creation date 2023-03-18 23:07:38Z, activation date 2023-03-18 23:07:38Z, and expiration date 2023-06-16 23:07:38Z.
+2023-03-19 00:07:38.809 +01:00 [INF] Writing data to file 'C:\Users\ahmed-med.lahmar\AppData\Local\ASP.NET\DataProtection-Keys\key-52c78544-f5db-4edd-a954-b164582af421.xml'.
+2023-03-19 00:07:38.897 +01:00 [INF] Now listening on: http://localhost:57679
+2023-03-19 00:07:38.899 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-03-19 00:07:38.901 +01:00 [INF] Hosting environment: Development
+2023-03-19 00:07:38.904 +01:00 [INF] Content root path: D:\projects\UserSegmentation\src\UserSegmentation.Web
+2023-03-19 00:07:39.654 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/ - -
+2023-03-19 00:07:39.759 +01:00 [WRN] Failed to determine the https port for redirect.
+2023-03-19 00:07:39.823 +01:00 [INF] Executing endpoint 'UserSegmentation.Web.Controllers.HomeController.Index (UserSegmentation.Web)'
+2023-03-19 00:07:39.843 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller UserSegmentation.Web.Controllers.HomeController (UserSegmentation.Web).
+2023-03-19 00:07:39.870 +01:00 [INF] Executing ViewResult, running view Index.
+2023-03-19 00:07:40.021 +01:00 [INF] Executed ViewResult - view Index executed in 155.2125ms.
+2023-03-19 00:07:40.026 +01:00 [INF] Executed action UserSegmentation.Web.Controllers.HomeController.Index (UserSegmentation.Web) in 178.2938ms
+2023-03-19 00:07:40.031 +01:00 [INF] Executed endpoint 'UserSegmentation.Web.Controllers.HomeController.Index (UserSegmentation.Web)'
+2023-03-19 00:07:40.045 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/ - - - 200 - text/html;+charset=utf-8 396.8674ms
+2023-03-19 00:07:40.137 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/css/site.css?v=AKvNjO3dCPPS0eSU1Ez8T2wI280i08yGycV9ndytL-c - -
+2023-03-19 00:07:40.137 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/lib/jquery/dist/jquery.min.js - -
+2023-03-19 00:07:40.137 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/UserSegmentation.Web.styles.css?v=n4UE_QCn4W78lpbMmJ3Zu0B3jlzEAxRXYGRm2s26eHs - -
+2023-03-19 00:07:40.138 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2023-03-19 00:07:40.138 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - -
+2023-03-19 00:07:40.139 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/css/bootstrap.min.css - -
+2023-03-19 00:07:40.170 +01:00 [INF] Sending file. Request path: '/UserSegmentation.Web.styles.css'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\obj\Debug\net7.0\scopedcss\bundle\UserSegmentation.Web.styles.css'
+2023-03-19 00:07:40.171 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\css\site.css'
+2023-03-19 00:07:40.171 +01:00 [INF] Sending file. Request path: '/js/site.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\js\site.js'
+2023-03-19 00:07:40.183 +01:00 [INF] Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\lib\jquery\dist\jquery.min.js'
+2023-03-19 00:07:40.183 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2023-03-19 00:07:40.191 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/UserSegmentation.Web.styles.css?v=n4UE_QCn4W78lpbMmJ3Zu0B3jlzEAxRXYGRm2s26eHs - - - 200 1137 text/css 53.5509ms
+2023-03-19 00:07:40.196 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.min.css'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css'
+2023-03-19 00:07:40.203 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - -
+2023-03-19 00:07:40.220 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/css/site.css?v=AKvNjO3dCPPS0eSU1Ez8T2wI280i08yGycV9ndytL-c - - - 200 194 text/css 82.9991ms
+2023-03-19 00:07:40.217 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2023-03-19 00:07:40.223 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - - - 200 230 text/javascript 84.5610ms
+2023-03-19 00:07:40.246 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2023-03-19 00:07:40.235 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/lib/jquery/dist/jquery.min.js - - - 200 89478 text/javascript 97.9002ms
+2023-03-19 00:07:40.235 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 200 78474 text/javascript 97.2911ms
+2023-03-19 00:07:40.238 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/css/bootstrap.min.css - - - 200 162726 text/css 99.5701ms
+2023-03-19 00:07:40.243 +01:00 [INF] Sending file. Request path: '/js/site.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\js\site.js'
+2023-03-19 00:07:40.224 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/lib/jquery/dist/jquery.min.js - -
+2023-03-19 00:07:40.253 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 200 78474 text/javascript 36.3411ms
+2023-03-19 00:07:40.270 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - - - 200 230 text/javascript 67.1209ms
+2023-03-19 00:07:40.273 +01:00 [INF] Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\lib\jquery\dist\jquery.min.js'
+2023-03-19 00:07:40.283 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/lib/jquery/dist/jquery.min.js - - - 200 89478 text/javascript 59.2060ms
+2023-03-19 00:07:40.286 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57679/favicon.ico - -
+2023-03-19 00:07:40.292 +01:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'D:\projects\UserSegmentation\src\UserSegmentation.Web\wwwroot\favicon.ico'
+2023-03-19 00:07:40.296 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57679/favicon.ico - - - 200 5430 image/x-icon 10.0138ms
+2023-03-19 00:12:32.236 +01:00 [INF] Application is shutting down...
