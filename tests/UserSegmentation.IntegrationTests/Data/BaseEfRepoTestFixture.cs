@@ -1,9 +1,8 @@
-﻿using UserSegmentation.Core.ProjectAggregate;
-using UserSegmentation.Infrastructure.Data;
-using UserSegmentation.SharedKernel.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using UserSegmentation.Infrastructure.Data;
+using UserSegmentation.SharedKernel.Interfaces;
 
 namespace UserSegmentation.IntegrationTests.Data;
 
@@ -36,8 +35,8 @@ public abstract class BaseEfRepoTestFixture
     return builder.Options;
   }
 
-  protected EfRepository<Project> GetRepository()
-  {
-    return new EfRepository<Project>(_dbContext);
-  }
+  // protected EfRepository<Project> GetRepository()
+  // {
+  //   return new EfRepository<Project>(_dbContext);
+  // }
 }

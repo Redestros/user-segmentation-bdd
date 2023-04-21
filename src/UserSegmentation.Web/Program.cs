@@ -5,11 +5,8 @@ using UserSegmentation.Core;
 using UserSegmentation.Infrastructure;
 using UserSegmentation.Infrastructure.Data;
 using UserSegmentation.Web;
-using FastEndpoints;
-using FastEndpoints.Swagger.Swashbuckle;
-using FastEndpoints.ApiExplorer;
-using Microsoft.OpenApi.Models;
 using Serilog;
+using UserSegmentation.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +16,7 @@ builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Con
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-  options.CheckConsentNeeded = context => true;
+  options.CheckConsentNeeded = _ => true;
   options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
@@ -29,17 +26,14 @@ var connectionString =
 
 builder.Services.AddDbContext(connectionString!);
 
-builder.Services.AddControllersWithViews().AddNewtonsoftJson();
-builder.Services.AddRazorPages();
-builder.Services.AddFastEndpoints();
-builder.Services.AddFastEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-  c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-  c.EnableAnnotations();
-  c.OperationFilter<FastEndpointsOperationFilter>();
-});
 
+builder.Services.AddMediatR(cfg => 
+  cfg.RegisterServicesFromAssembly(typeof(ApplicationModule).Assembly));
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 // add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices
 builder.Services.Configure<ServiceConfig>(config =>
 {
@@ -61,32 +55,19 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseDeveloperExceptionPage();
+  app.UseSwagger();
+  app.UseSwaggerUI();
   app.UseShowAllServicesMiddleware();
 }
-else
-{
-  app.UseExceptionHandler("/Home/Error");
-  app.UseHsts();
-}
-
-app.UseRouting();
-app.UseFastEndpoints();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseCookiePolicy();
 
-// Enable middleware to serve generated Swagger as a JSON endpoint.
-app.UseSwagger();
+app.UseAuthorization();
 
-// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
-
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+app.MapControllers();
 
 // Seed Database
 using (var scope = app.Services.CreateScope())
@@ -96,7 +77,6 @@ using (var scope = app.Services.CreateScope())
   try
   {
     var context = services.GetRequiredService<AppDbContext>();
-    //                    context.Database.Migrate();
     context.Database.EnsureCreated();
     SeedData.Initialize(services);
   }

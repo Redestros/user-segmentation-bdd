@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
-using UserSegmentation.Core.ContributorAggregate;
-using UserSegmentation.Core.ProjectAggregate;
+using Microsoft.EntityFrameworkCore;
 using UserSegmentation.SharedKernel;
 using UserSegmentation.SharedKernel.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace UserSegmentation.Infrastructure.Data;
 
@@ -17,10 +15,6 @@ public class AppDbContext : DbContext
   {
     _dispatcher = dispatcher;
   }
-
-  public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-  public DbSet<Project> Projects => Set<Project>();
-  public DbSet<Contributor> Contributors => Set<Contributor>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

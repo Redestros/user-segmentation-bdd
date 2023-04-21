@@ -11,16 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.ApiEndpoints"/>
     <PackageReference Include="Ardalis.ListStartupServices"/>
     <PackageReference Include="Ardalis.Result"/>
     <PackageReference Include="Ardalis.Result.AspNetCore"/>
-    <PackageReference Include="FastEndpoints"/>
-    <PackageReference Include="FastEndpoints.ApiExplorer"/>
-    <PackageReference Include="FastEndpoints.Swagger.Swashbuckle"/>
     <PackageReference Include="MediatR"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" PrivateAssets="All"/>
     <PackageReference Include="Serilog.Sinks.ApplicationInsights"/>
     <PackageReference Include="Swashbuckle.AspNetCore"/>
@@ -29,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UserSegmentation.Application\UserSegmentation.Application.csproj"/>
     <ProjectReference Include="..\UserSegmentation.Infrastructure\UserSegmentation.Infrastructure.csproj"/>
   </ItemGroup>
 
@@ -104,6 +102,11 @@
     <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js"/>
     <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map"/>
     <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiModels"/>
+    <Folder Include="wwwroot"/>
   </ItemGroup>
 
 </Project>

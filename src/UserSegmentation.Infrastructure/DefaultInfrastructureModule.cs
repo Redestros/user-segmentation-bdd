@@ -1,26 +1,26 @@
 ﻿using System.Reflection;
 using Autofac;
+using MediatR;
+using MediatR.Pipeline;
 using UserSegmentation.Core.Interfaces;
-using UserSegmentation.Core.ProjectAggregate;
+using UserSegmentation.Core.SegmentAggregate;
 using UserSegmentation.Infrastructure.Data;
 using UserSegmentation.SharedKernel;
 using UserSegmentation.SharedKernel.Interfaces;
-using MediatR;
-using MediatR.Pipeline;
 using Module = Autofac.Module;
 
 namespace UserSegmentation.Infrastructure;
 
 public class DefaultInfrastructureModule : Module
 {
-  private readonly bool _isDevelopment = false;
+  private readonly bool _isDevelopment;
   private readonly List<Assembly> _assemblies = new();
 
   public DefaultInfrastructureModule(bool isDevelopment, Assembly? callingAssembly = null)
   {
     _isDevelopment = isDevelopment;
     var coreAssembly =
-      Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
+      Assembly.GetAssembly(typeof(Segment));
     var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));
     if (coreAssembly != null)
     {
@@ -69,12 +69,12 @@ public class DefaultInfrastructureModule : Module
       .As<IDomainEventDispatcher>()
       .InstancePerLifetimeScope();
 
-    builder.Register<ServiceFactory>(context =>
-    {
-      var c = context.Resolve<IComponentContext>();
-
-      return t => c.Resolve(t);
-    });
+    // builder.Register<ServiceFactory>(context =>
+    // {
+    //   var c = context.Resolve<IComponentContext>();
+    //
+    //   return t => c.Resolve(t);
+    // });
 
     var mediatrOpenTypes = new[]
     {
@@ -91,14 +91,14 @@ public class DefaultInfrastructureModule : Module
     }
   }
 
-  private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)
+  private static void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)
   {
     // NOTE: Add any development only services here
     builder.RegisterType<FakeEmailSender>().As<IEmailSender>()
       .InstancePerLifetimeScope();
   }
 
-  private void RegisterProductionOnlyDependencies(ContainerBuilder builder)
+  private static void RegisterProductionOnlyDependencies(ContainerBuilder builder)
   {
     // NOTE: Add any production only services here
     builder.RegisterType<SmtpEmailSender>().As<IEmailSender>()
