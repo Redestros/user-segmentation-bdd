@@ -1,13 +1,15 @@
 ﻿using MediatR;
 using UserSegmentation.SharedKernel.Interfaces;
 
-namespace UserSegmentation.Application.Segment.Queries;
+namespace UserSegmentation.Application.Segment;
 
-public class GetSegmentsHandler : IRequestHandler<GetSegmentsQuery, List<SegmentDto>>
+public record GetSegmentsQuery : IRequest<List<SegmentDto>>;
+
+public class GetSegments : IRequestHandler<GetSegmentsQuery, List<SegmentDto>>
 {
   private readonly IRepository<Core.SegmentAggregate.Segment> _repository;
 
-  public GetSegmentsHandler(IRepository<Core.SegmentAggregate.Segment> repository)
+  public GetSegments(IRepository<Core.SegmentAggregate.Segment> repository)
   {
     _repository = repository;
   }

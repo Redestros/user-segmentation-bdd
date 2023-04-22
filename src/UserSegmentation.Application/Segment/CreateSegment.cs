@@ -1,14 +1,15 @@
 using MediatR;
-using UserSegmentation.Application.Segment.commands;
 using UserSegmentation.SharedKernel.Interfaces;
 
-namespace UserSegmentation.Application.Segment.Commands;
+namespace UserSegmentation.Application.Segment;
 
-public class CreateSegmentCommandHandler : IRequestHandler<CreateSegmentCommand, int>
+public record CreateSegmentCommand(string Name) : IRequest<int>;
+
+public class CreateSegment : IRequestHandler<CreateSegmentCommand, int>
 {
   private readonly IRepository<Core.SegmentAggregate.Segment> _repository;
 
-  public CreateSegmentCommandHandler(IRepository<Core.SegmentAggregate.Segment> repository)
+  public CreateSegment(IRepository<Core.SegmentAggregate.Segment> repository)
   {
     _repository = repository;
   }

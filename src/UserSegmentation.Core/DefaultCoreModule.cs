@@ -8,7 +8,7 @@ public class DefaultCoreModule : Module
 {
   protected override void Load(ContainerBuilder builder)
   {
-    builder.RegisterType<AssignUserToSegmentService>()
-      .As<IAssignUserToSegmentService>().InstancePerLifetimeScope();
+    builder.RegisterType<UserSegmentService>()
+      .As<IUserSegmentService>().InstancePerLifetimeScope();
   }
 }

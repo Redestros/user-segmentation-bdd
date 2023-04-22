@@ -7,11 +7,17 @@ namespace UserSegmentation.Core.UserAggregate;
 public class User : EntityBase, IAggregateRoot
 {
   public string Username { get; private set; }
-  public string FirstName { get; private set; }
-  public string LastName { get; private set; }
+  public string FirstName { get; private set; } = "";
+  public string LastName { get; private set; } = "";
   public string Email { get; private set; }
-  public string PhoneNumber { get; private set; }
-  public SegmentReference? SegmentReference { get; private set; }
+  public string PhoneNumber { get; private set; } = "";
+  public int? SegmentId { get; private set; }
+
+  public User(string username, string email)
+  {
+    Username = username;
+    Email = email;
+  }
 
   public User(string username, string firstName, string lastName, string email, string phoneNumber)
   {
@@ -22,9 +28,16 @@ public class User : EntityBase, IAggregateRoot
     PhoneNumber = phoneNumber;
   }
 
-  public void AssignToSegment(SegmentReference reference)
+  public void UpdatePersonalInfo(string firstName, string lastName, string phoneNumber)
   {
-    SegmentReference = reference;
-    RegisterDomainEvent(new UsedAssignedToSegmentEvent(Id, reference));
+    FirstName = firstName;
+    LastName = lastName;
+    PhoneNumber = phoneNumber;
+  }
+
+  public void AssignToSegment(int segmentId)
+  {
+    SegmentId = segmentId;
+    RegisterDomainEvent(new UsedAssignedToSegmentEvent(Id, segmentId));
   }
 }

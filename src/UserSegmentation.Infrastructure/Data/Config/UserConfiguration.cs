@@ -11,7 +11,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     builder.HasKey(u => u.Id);
 
     builder.HasIndex(user => user.Username).IsUnique();
-
-    builder.OwnsOne(user => user.SegmentReference);
   }
 }

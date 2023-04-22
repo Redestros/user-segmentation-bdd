@@ -3,7 +3,7 @@ using UserSegmentation.Core.UserAggregate;
 
 namespace UserSegmentation.Core.Interfaces;
 
-public interface IAssignUserToSegmentService
+public interface IUserSegmentService
 {
-  public Task<Result> Assign(int userId, SegmentReference reference);
+  public Task<Result> Assign(int userId, int segmentId);
 }

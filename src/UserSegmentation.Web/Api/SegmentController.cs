@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using UserSegmentation.Application.Segment.commands;
-using UserSegmentation.Application.Segment.Queries;
+using UserSegmentation.Application.Segment;
 
 namespace UserSegmentation.Web.Api;
 

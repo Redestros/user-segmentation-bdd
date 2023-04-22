@@ -26,10 +26,6 @@ var connectionString =
 
 builder.Services.AddDbContext(connectionString!);
 
-
-builder.Services.AddMediatR(cfg => 
-  cfg.RegisterServicesFromAssembly(typeof(ApplicationModule).Assembly));
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +45,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
   containerBuilder.RegisterModule(new DefaultCoreModule());
   containerBuilder.RegisterModule(
     new DefaultInfrastructureModule(builder.Environment.EnvironmentName == "Development"));
+  containerBuilder.RegisterModule(
+    new ApplicationModule());
 });
 
 //builder.Logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
@@ -68,6 +66,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseFluentValidationExceptionHandler();
 
 // Seed Database
 using (var scope = app.Services.CreateScope())

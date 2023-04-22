@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserSegmentation.Core.Services;
 using UserSegmentation.Core.UserAggregate.Events;
 using UserSegmentation.SharedKernel.Interfaces;
 
@@ -6,15 +7,15 @@ namespace UserSegmentation.Core.UserAggregate.Handlers;
 
 public class UsedAssignedToSegmentHandler : INotificationHandler<UsedAssignedToSegmentEvent>
 {
-  private readonly IRepository<User> _repository;
+  private readonly UserSegmentService _userSegmentService;
 
-  public UsedAssignedToSegmentHandler(IRepository<User> repository)
+  public UsedAssignedToSegmentHandler(UserSegmentService segmentService)
   {
-    _repository = repository;
+    _userSegmentService = segmentService;
   }
 
   public async Task Handle(UsedAssignedToSegmentEvent domainEvent, CancellationToken cancellationToken)
   {
-    var user = await _repository.GetByIdAsync(domainEvent.UserId, cancellationToken);
+    await _userSegmentService.Assign(domainEvent.UserId, domainEvent.SegmentId);
   }
 }

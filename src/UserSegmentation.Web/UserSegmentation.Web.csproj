@@ -29,8 +29,4 @@
     <ProjectReference Include="..\UserSegmentation.Infrastructure\UserSegmentation.Infrastructure.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot"/>
-  </ItemGroup>
-
 </Project>

@@ -6,18 +6,18 @@ using UserSegmentation.SharedKernel.Interfaces;
 
 namespace UserSegmentation.Core.Services;
 
-public class AssignUserToSegmentService : IAssignUserToSegmentService
+public class UserSegmentService : IUserSegmentService
 {
   private readonly IRepository<User> _userRepository;
   private readonly IRepository<Segment> _segmentRepository;
 
-  public AssignUserToSegmentService(IRepository<User> userRepository, IRepository<Segment> segmentRepository)
+  public UserSegmentService(IRepository<User> userRepository, IRepository<Segment> segmentRepository)
   {
     _userRepository = userRepository;
     _segmentRepository = segmentRepository;
   }
 
-  public async Task<Result> Assign(int userId, SegmentReference reference)
+  public async Task<Result> Assign(int userId, int segmentId)
   {
     var user = await _userRepository.GetByIdAsync(userId);
     if (user == null)
@@ -25,18 +25,18 @@ public class AssignUserToSegmentService : IAssignUserToSegmentService
       return Result.NotFound("User not found");
     }
 
-    var segment = await _segmentRepository.GetByIdAsync(reference.Id);
+    var segment = await _segmentRepository.GetByIdAsync(segmentId);
     if (segment == null)
     {
       return Result.NotFound("Segment not found");
     }
 
-    if (segment.Name.Equals("Default"))
+    if (segment.Name.ToLower().Equals("default"))
     {
       return Result.Error("Cannot assign user to default segment");
     }
 
-    user.AssignToSegment(reference);
+    user.AssignToSegment(segmentId);
     await _userRepository.UpdateAsync(user);
 
     return Result.Success();

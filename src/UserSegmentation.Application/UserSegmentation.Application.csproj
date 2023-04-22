@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Segment" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\UserSegmentation.Core\UserSegmentation.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="FluentValidation.AspNetCore" />
     <PackageReference Include="MediatR" />
   </ItemGroup>
 
