@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using LanguageExt.Common;
 using UserSegmentation.Core.Interfaces;
 using UserSegmentation.Core.SegmentAggregate;
 using UserSegmentation.Core.UserAggregate;
@@ -17,28 +17,28 @@ public class UserSegmentService : IUserSegmentService
     _segmentRepository = segmentRepository;
   }
 
-  public async Task<Result> Assign(int userId, int segmentId)
+  public async Task<Result<bool>> Assign(int userId, int segmentId)
   {
     var user = await _userRepository.GetByIdAsync(userId);
     if (user == null)
     {
-      return Result.NotFound("User not found");
+      return new Result<bool>(new Exception("user not found"));
     }
 
     var segment = await _segmentRepository.GetByIdAsync(segmentId);
     if (segment == null)
     {
-      return Result.NotFound("Segment not found");
+      return new Result<bool>(new Exception("segment not found"));
     }
 
     if (segment.Name.ToLower().Equals("default"))
     {
-      return Result.Error("Cannot assign user to default segment");
+      return new Result<bool>(new Exception("Cannot assign user to default segment"));
     }
 
     user.AssignToSegment(segmentId);
     await _userRepository.UpdateAsync(user);
 
-    return Result.Success();
+    return true;
   }
 }

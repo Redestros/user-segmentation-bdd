@@ -20,6 +20,7 @@ public class GetUsersHandler : IRequestHandler<GetUsersQuery, List<UserDto>>
     return users.Select(user => new UserDto
     {
       Id = user.Id,
+      Username = user.Username,
       FirstName = user.FirstName,
       LastName = user.LastName,
       Email = user.Email,

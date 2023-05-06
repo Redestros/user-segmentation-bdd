@@ -1,0 +1,6 @@
+﻿services:
+  usersegmentation.web:
+    image: usersegmentation.web
+    build:
+      context: .
+      dockerfile: src/UserSegmentation.Web/Dockerfile

@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="LanguageExt.Core" />
     <PackageReference Include="MediatR" />
   </ItemGroup>
 

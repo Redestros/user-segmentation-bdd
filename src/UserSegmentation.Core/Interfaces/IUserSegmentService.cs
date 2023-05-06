@@ -1,9 +1,8 @@
-﻿using Ardalis.Result;
-using UserSegmentation.Core.UserAggregate;
+﻿using LanguageExt.Common;
 
 namespace UserSegmentation.Core.Interfaces;
 
 public interface IUserSegmentService
 {
-  public Task<Result> Assign(int userId, int segmentId);
+  public Task<Result<bool>> Assign(int userId, int segmentId);
 }

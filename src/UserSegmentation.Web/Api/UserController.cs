@@ -1,13 +1,15 @@
-﻿using Ardalis.Result;
+﻿#region
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserSegmentation.Application;
 using UserSegmentation.Application.User;
+
+#endregion
 
 namespace UserSegmentation.Web.Api;
 
-[ApiController]
-[Route("[controller]")]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
   private readonly IMediator _mediator;
 
@@ -23,23 +25,57 @@ public class UserController : ControllerBase
     return Ok(result);
   }
 
-  [HttpPost]
-  public async Task<ActionResult> Create([FromBody] CreateUserRequest request)
+  [HttpGet("{id:int}")]
+  public async Task<IActionResult> Get(int id)
   {
-    var id = await _mediator.Send(new CreateUserCommand(request.Username, request.Email));
-    return Ok(id);
+    var result = await _mediator.Send(new GetUserQuery(id));
+    return result.Match<IActionResult>(Ok, exception =>
+    {
+      if (exception is UserNotFoundException userNotFoundException)
+      {
+        return NotFound(userNotFoundException.ToProblemDetails());
+      }
+
+      return StatusCode(500);
+    });
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+  {
+    var response = await _mediator.Send(new CreateUserCommand(request.Username, request.Email));
+    return response.Match<IActionResult>(customerId =>
+    {
+      var userResponse = new CreateUserResponse(customerId);
+      return CreatedAtAction("Get", new { id = userResponse.Id }, null);
+    }, exception =>
+    {
+      if (exception is ValidationException validationException)
+      {
+        return BadRequest(validationException.ToProblemDetails());
+      }
+
+      return StatusCode(500);
+    });
   }
 
   [HttpPut("{id:int}")]
-  public async Task<Result> UpdatePersonalInfo(int id, [FromBody] UpdateUserPersonalInfoRequest request)
+  public async Task<IActionResult> UpdatePersonalInfo(int id, [FromBody] UpdateUserPersonalInfoRequest request)
   {
-    var command =
-      new UpdateUserPersonalInfoCommand(
-        id,
-        request.FirstName,
-        request.LastName,
-        request.PhoneNumber);
+    var command = new UpdateUserPersonalInfoCommand(
+      id,
+      request.FirstName,
+      request.LastName,
+      request.PhoneNumber);
     var result = await _mediator.Send(command);
-    return result;
+    return result.Match<IActionResult>(_ => Ok(), exception =>
+    {
+      if (exception is UserNotFoundException userNotFoundException)
+      {
+        return NotFound(userNotFoundException.ToProblemDetails());
+      }
+
+      return StatusCode(500);
+    });
   }
 }

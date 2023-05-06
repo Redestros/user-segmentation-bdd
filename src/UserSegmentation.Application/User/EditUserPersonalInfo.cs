@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using LanguageExt.Common;
 using MediatR;
 using UserSegmentation.SharedKernel.Interfaces;
 
@@ -12,29 +12,29 @@ public class UpdateUserPersonalInfoRequest
 }
 
 public record UpdateUserPersonalInfoCommand
-  (int Id, string FirstName, string LastName, string PhoneNumber) : IRequest<Result>;
+  (int Id, string FirstName, string LastName, string PhoneNumber) : IRequest<Result<bool>>;
 
-public class EditUserPersonalInfoHandler : IRequestHandler<UpdateUserPersonalInfoCommand, Result>
+public class UpdateUserPersonalInfoHandler : IRequestHandler<UpdateUserPersonalInfoCommand, Result<bool>>
 {
-  private IRepository<Core.UserAggregate.User> _repository;
+  private readonly IRepository<Core.UserAggregate.User> _repository;
 
-  public EditUserPersonalInfoHandler(IRepository<Core.UserAggregate.User> repository)
+  public UpdateUserPersonalInfoHandler(IRepository<Core.UserAggregate.User> repository)
   {
     _repository = repository;
   }
 
-  public async Task<Result> Handle(UpdateUserPersonalInfoCommand request, CancellationToken cancellationToken)
+  public async Task<Result<bool>> Handle(UpdateUserPersonalInfoCommand request, CancellationToken cancellationToken)
   {
     var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
     if (user == null)
     {
-      return Result.NotFound();
+      return new Result<bool>(new UserNotFoundException(request.Id));
     }
 
     user.UpdatePersonalInfo(request.FirstName, request.LastName, request.PhoneNumber);
     await _repository.UpdateAsync(user, cancellationToken);
     await _repository.SaveChangesAsync(cancellationToken);
 
-    return Result.Success();
+    return true;
   }
 }
