@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-segmentation
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      app: user-segmentation
+  template:
+    metadata:
+      labels:
+        app: user-segmentation
+    spec:
+      containers:
+      - name: user-segmentation
+        image: user-segmentation-bdd
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080

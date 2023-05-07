@@ -35,4 +35,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Features\Segment.feature" />
+    <UpToDateCheckInput Remove="Features\User.feature" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckBuild Remove="Features\Segment.feature.cs" />
+    <UpToDateCheckBuild Remove="Features\User.feature.cs" />
+  </ItemGroup>
+
 </Project>

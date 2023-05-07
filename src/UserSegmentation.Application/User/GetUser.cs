@@ -25,7 +25,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, Result<UserDto>>
     var userDto = new UserDto()
     {
       Id = user.Id,
-      Username = user.FirstName,
+      Username = user.Username,
       FirstName = user.FirstName,
       LastName = user.LastName,
       Email = user.Email,

@@ -47,7 +47,7 @@ public class UserController : BaseApiController
     return response.Match<IActionResult>(customerId =>
     {
       var userResponse = new CreateUserResponse(customerId);
-      return CreatedAtAction("Get", new { id = userResponse.Id }, null);
+      return CreatedAtAction("Get", new { Id = userResponse.Id }, null);
     }, exception =>
     {
       if (exception is ValidationException validationException)

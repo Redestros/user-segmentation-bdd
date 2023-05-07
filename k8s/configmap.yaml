@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-segmentation
+  namespace: development
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
