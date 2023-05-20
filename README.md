@@ -1,5 +1,5 @@
 
-# User segmentation with Behavior Driven Design testing
+# User segmentation with Behavior Driven Development testing
 
 User segmentation is to differentiate how the system treat users based on
 parameters associated to their segments.
