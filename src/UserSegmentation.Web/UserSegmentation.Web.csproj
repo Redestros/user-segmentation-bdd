@@ -28,4 +28,10 @@
     <ProjectReference Include="..\UserSegmentation.Infrastructure\UserSegmentation.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -44,11 +44,7 @@ public class UserController : BaseApiController
   public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
   {
     var response = await _mediator.Send(new CreateUserCommand(request.Username, request.Email));
-    return response.Match<IActionResult>(customerId =>
-    {
-      var userResponse = new CreateUserResponse(customerId);
-      return CreatedAtAction("Get", new { Id = userResponse.Id }, null);
-    }, exception =>
+    return response.Match<IActionResult>(createdUserResponse => CreatedAtAction("Get", new { Id = createdUserResponse.Id }, null), exception =>
     {
       if (exception is ValidationException validationException)
       {

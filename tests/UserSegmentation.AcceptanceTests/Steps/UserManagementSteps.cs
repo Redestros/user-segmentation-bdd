@@ -1,8 +1,11 @@
 ﻿using System.Net.Http.Json;
-using Microsoft.AspNetCore.Http;
+using System.Text;
+using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using UserSegmentation.AcceptanceTests.Models;
+using UserSegmentation.AcceptanceTests.Support;
+using UserSegmentation.Application.User;
+using UserSegmentation.Core.UserAggregate;
 using Xunit;
 
 namespace UserSegmentation.AcceptanceTests.Steps;
@@ -14,10 +17,10 @@ public class UserManagementSteps
   private readonly HttpClient _httpClient;
   private readonly ScenarioContext _context;
 
-  public UserManagementSteps(HttpClient httpClient, ScenarioContext context)
+  public UserManagementSteps(ScenarioContext context, ApplicationFactory factory)
   {
-    _httpClient = httpClient;
     _context = context;
+    _httpClient = factory.CreateDefaultClient(new Uri($"http://localhost/"));
   }
 
   [When(@"I create users with the following details")]
@@ -27,7 +30,10 @@ public class UserManagementSteps
     var createdUsers = new List<CreatedUserInfo>();
     foreach (var request in createUserRequests)
     {
+      var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8);
+
       var response = await _httpClient.PostAsJsonAsync(UserEndpoint, request);
+      await _httpClient.PostAsync(UserEndpoint, content);
       var location = response.Headers.Location?.AbsoluteUri;
       Assert.NotNull(location);
       createdUsers.Add(new CreatedUserInfo(location, request.Username, request.Email));
@@ -48,6 +54,53 @@ public class UserManagementSteps
       Assert.Equal(info.Email, response.Email);
     }
   }
+  
+  [When(@"I get the users list")]
+  public async Task WhenIGetTheUsersList()
+  {
+    var result = await _httpClient.GetFromJsonAsync<List<UserDto>>(UserEndpoint);
+    _context.Add("Users", result);
+  }
 
+  [Then(@"users list should not be empty")]
+  public void ThenUsersListShouldNotBeEmpty()
+  {
+    var users = _context.Get<List<UserDto>>("Users");
+    Assert.NotEmpty(users);
+    Assert.Equal(3, users.Count);
+  }
+
+  [Given(@"an existing user")]
+  public void GivenAnExistingUser(Table table)
+  {
+    var username = table.CreateInstance<UserRepresentation>();
+    var testUsers = _context.Get<List<User>>("testUsers");
+    var existingUser = testUsers.First(x => x.Username.Equals(username.Username));
+    Assert.NotNull(existingUser);
+    _context.Add("userId", existingUser.Id);
+  }
+
+  [When(@"I update his personal info with")]
+  public async Task WhenIUpdateHisPersonalInfoWith(Table table)
+  {
+    var userId = _context.Get<int>("userId");
+    var updateRequest = table.CreateInstance<UpdateUserPersonalInfoRequest>();
+    _context.Add("userUpdateRequest", updateRequest);
+    await _httpClient.PutAsJsonAsync($"{UserEndpoint}/{userId}", updateRequest);
+  }
+  
+  [Then(@"personal infos are updated successfully")]
+  public async Task ThenPersonalInfosAreUpdatedSuccessfully()
+  {
+    var userId = _context.Get<int>("userId");
+    var user = await _httpClient.GetFromJsonAsync<UserDto>($"{UserEndpoint}/{userId}");
+    var updateRequest = _context.Get<UpdateUserPersonalInfoRequest>("userUpdateRequest");
+    Assert.NotNull(user);
+    Assert.Equal(updateRequest.FirstName, user.FirstName);
+    Assert.Equal(updateRequest.LastName, user.LastName);
+    Assert.Equal(updateRequest.PhoneNumber, user.PhoneNumber);
+  }
   private record CreatedUserInfo(string Location, string Username, string Email);
+
+  private record UserRepresentation(string Username);
 }

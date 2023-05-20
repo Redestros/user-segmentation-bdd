@@ -14,11 +14,11 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Configuration));
 
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-  options.CheckConsentNeeded = _ => true;
-  options.MinimumSameSitePolicy = SameSiteMode.None;
-});
+// builder.Services.Configure<CookiePolicyOptions>(options =>
+// {
+//   options.CheckConsentNeeded = _ => true;
+//   options.MinimumSameSitePolicy = SameSiteMode.None;
+// });
 
 var connectionString =
   builder.Configuration
@@ -49,7 +49,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     new ApplicationModule());
 });
 
-//builder.Logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -61,7 +61,7 @@ if (app.Environment.IsDevelopment())
   app.UseShowAllServicesMiddleware();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -69,22 +69,25 @@ app.MapControllers();
 
 app.UseFluentValidationExceptionHandler();
 
+app.MapHealthChecks("/healthz");
+
 // Seed Database
-// using (var scope = app.Services.CreateScope())
-// {
-//   var services = scope.ServiceProvider;
-//
-//   try
-//   {
-//     var context = services.GetRequiredService<AppDbContext>();
-//     context.Database.EnsureCreated();
-//     SeedData.Initialize(services);
-//   }
-//   catch (Exception ex)
-//   {
-//     var logger = services.GetRequiredService<ILogger<Program>>();
-//     logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
-//   }
-// }
+using (var scope = app.Services.CreateScope())
+{
+  var services = scope.ServiceProvider;
+
+  try
+  {
+    var context = services.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+    SeedData.Initialize(services);
+  }
+  catch (Exception ex)
+  {
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
+  }
+}
 
 app.Run();
+public partial class Program { }

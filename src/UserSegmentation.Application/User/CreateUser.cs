@@ -14,9 +14,9 @@ public class CreateUserRequest
 
 public record CreateUserResponse(int Id);
 
-public record CreateUserCommand(string Username, string Email) : IRequest<Result<int>>;
+public record CreateUserCommand(string Username, string Email) : IRequest<Result<CreateUserResponse>>;
 
-public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<int>>
+public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<CreateUserResponse>>
 {
   private readonly IRepository<Core.UserAggregate.User> _userRepository;
   private readonly IValidator<Core.UserAggregate.User> _validator;
@@ -27,7 +27,7 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<int>>
     _validator = validator;
   }
 
-  public async Task<Result<int>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+  public async Task<Result<CreateUserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
   {
     var user = new Core.UserAggregate.User(request.Username, request.Email);
 
@@ -35,11 +35,11 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<int>>
     if (!validationResult.IsValid)
     {
       var validationException = new ValidationException(validationResult.Errors);
-      return new Result<int>(validationException);
+      return new Result<CreateUserResponse>(validationException);
     }
     
     var createdUser = await _userRepository.AddAsync(user, cancellationToken);
     await _userRepository.SaveChangesAsync(cancellationToken);
-    return createdUser.Id;  
+    return new CreateUserResponse(createdUser.Id);  
   }
 }
