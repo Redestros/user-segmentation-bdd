@@ -1,5 +1,7 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using UserSegmentation.Application.Segment;
+using UserSegmentation.Core.SegmentAggregate;
 using UserSegmentation.Core.UserAggregate;
 using UserSegmentation.Infrastructure.Data;
 
@@ -33,6 +35,23 @@ public class DatabaseSetupSteps
     _appDbContext?.SaveChanges();
     _scenarioContext.Add("testUsers", createdUsers);
   }
-  
+
+  [Given(@"the following segments")]
+  public void GivenTheFollowingSegments(Table table)
+  {
+    var segments = table.CreateSet<SegmentDto>();
+    var createdSegments = new List<Segment>();
+    foreach (var segment in segments)
+    {
+      var segmentEntry = _appDbContext?.Set<Segment>().Add(new Segment(segment.Name));
+      if (segmentEntry != null)
+      {
+        createdSegments.Add(segmentEntry.Entity);
+      }
+    }
+
+    _appDbContext?.SaveChanges();
+    _scenarioContext.Add("testSegments", createdSegments);
+  }
 }
 public record UserInfo(string Username, string Email);

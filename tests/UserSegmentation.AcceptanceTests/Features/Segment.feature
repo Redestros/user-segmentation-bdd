@@ -1,9 +1,19 @@
-﻿Feature: Segment
-A Segment represents a method to partition users.
+﻿Feature: Manage segments in system
 
-    @mytag
-    Scenario: Create Segment
-        Given a name
-        And the second number is 70
-        When the two numbers are added
-        Then the result should be 120
+    Background: 
+        Given the following segments
+            | Name    |
+            | Default |
+            | Silver  |
+            | Gold    |
+    
+    Scenario: Segments List should not be empty
+        When I get the segment list
+        Then segment list should not be empty
+        
+    Scenario: Segment get created successfully
+        When I create segments with the following detail
+            | Name      |
+            | Platinum |
+            | VIP       |
+        Then segments are created successfully

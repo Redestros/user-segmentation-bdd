@@ -19,7 +19,7 @@ namespace UserSegmentation.AcceptanceTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class SegmentFeature : object, Xunit.IClassFixture<SegmentFeature.FixtureData>, System.IDisposable
+    public partial class ManageSegmentsInSystemFeature : object, Xunit.IClassFixture<ManageSegmentsInSystemFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line 1 "Segment.feature"
 #line hidden
         
-        public SegmentFeature(SegmentFeature.FixtureData fixtureData, UserSegmentation_AcceptanceTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public ManageSegmentsInSystemFeature(ManageSegmentsInSystemFeature.FixtureData fixtureData, UserSegmentation_AcceptanceTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace UserSegmentation.AcceptanceTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Segment", "A Segment represents a method to partition users.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Manage segments in system", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,22 +75,37 @@ namespace UserSegmentation.AcceptanceTests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 3
+    #line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table1.AddRow(new string[] {
+                        "Default"});
+            table1.AddRow(new string[] {
+                        "Silver"});
+            table1.AddRow(new string[] {
+                        "Gold"});
+#line 4
+        testRunner.Given("the following segments", ((string)(null)), table1, "Given ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Segment")]
-        [Xunit.TraitAttribute("FeatureTitle", "Segment")]
-        [Xunit.TraitAttribute("Description", "Create Segment")]
-        [Xunit.TraitAttribute("Category", "mytag")]
-        public void CreateSegment()
+        [Xunit.SkippableFactAttribute(DisplayName="Segments List should not be empty")]
+        [Xunit.TraitAttribute("FeatureTitle", "Manage segments in system")]
+        [Xunit.TraitAttribute("Description", "Segments List should not be empty")]
+        public void SegmentsListShouldNotBeEmpty()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Segment", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Segments List should not be empty", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 10
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -100,17 +115,51 @@ namespace UserSegmentation.AcceptanceTests.Features
             else
             {
                 this.ScenarioStart();
-#line 6
-        testRunner.Given("a name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 3
+    this.FeatureBackground();
 #line hidden
-#line 7
-        testRunner.And("the second number is 70", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+        testRunner.When("I get the segment list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
-        testRunner.When("the two numbers are added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+        testRunner.Then("segment list should not be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 9
-        testRunner.Then("the result should be 120", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Segment get created successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "Manage segments in system")]
+        [Xunit.TraitAttribute("Description", "Segment get created successfully")]
+        public void SegmentGetCreatedSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Segment get created successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 14
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+    this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table2.AddRow(new string[] {
+                            "Platinum"});
+                table2.AddRow(new string[] {
+                            "VIP"});
+#line 15
+        testRunner.When("I create segments with the following detail", ((string)(null)), table2, "When ");
+#line hidden
+#line 19
+        testRunner.Then("segments are created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -123,12 +172,12 @@ namespace UserSegmentation.AcceptanceTests.Features
             
             public FixtureData()
             {
-                SegmentFeature.FeatureSetup();
+                ManageSegmentsInSystemFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                SegmentFeature.FeatureTearDown();
+                ManageSegmentsInSystemFeature.FeatureTearDown();
             }
         }
     }

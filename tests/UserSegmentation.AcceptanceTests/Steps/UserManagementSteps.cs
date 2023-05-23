@@ -1,6 +1,4 @@
 ﻿using System.Net.Http.Json;
-using System.Text;
-using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using UserSegmentation.AcceptanceTests.Support;
@@ -30,10 +28,7 @@ public class UserManagementSteps
     var createdUsers = new List<CreatedUserInfo>();
     foreach (var request in createUserRequests)
     {
-      var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8);
-
       var response = await _httpClient.PostAsJsonAsync(UserEndpoint, request);
-      await _httpClient.PostAsync(UserEndpoint, content);
       var location = response.Headers.Location?.AbsoluteUri;
       Assert.NotNull(location);
       createdUsers.Add(new CreatedUserInfo(location, request.Username, request.Email));

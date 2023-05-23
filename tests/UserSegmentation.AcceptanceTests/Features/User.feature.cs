@@ -79,20 +79,20 @@ namespace UserSegmentation.AcceptanceTests.Features
         {
 #line 3
     #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Username",
                         "Email"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "draven",
                         "alfredo@gmail.com"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "jhin",
                         "jhin@gmail.com"});
-            table1.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "varus",
                         "varus@gmail.com"});
 #line 4
-        testRunner.Given("the following users", ((string)(null)), table1, "Given ");
+        testRunner.Given("the following users", ((string)(null)), table3, "Given ");
 #line hidden
         }
         
@@ -153,17 +153,17 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line 3
     this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Username",
                             "Email"});
-                table2.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "user1",
                             "user1@gmail.com"});
-                table2.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "user2",
                             "user2@gmail.com"});
 #line 15
-        testRunner.When("I create users with the following details", ((string)(null)), table2, "When ");
+        testRunner.When("I create users with the following details", ((string)(null)), table4, "When ");
 #line hidden
 #line 19
         testRunner.Then("users are created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -193,23 +193,23 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line 3
     this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "Username"});
-                table3.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "draven"});
 #line 22
-        testRunner.Given("an existing user", ((string)(null)), table3, "Given ");
+        testRunner.Given("an existing user", ((string)(null)), table5, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "FirstName",
                             "LastName",
                             "PhoneNumber"});
-                table4.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Draven",
                             "The executioner",
                             "28870101"});
 #line 25
-        testRunner.When("I update his personal info with", ((string)(null)), table4, "When ");
+        testRunner.When("I update his personal info with", ((string)(null)), table6, "When ");
 #line hidden
 #line 28
         testRunner.Then("personal infos are updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
