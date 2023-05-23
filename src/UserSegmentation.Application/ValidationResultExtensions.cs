@@ -18,7 +18,7 @@ public static class ValidationResultExtensions
       Status = (int)(HttpStatusCode.BadRequest),
       Title = "Invalid request"
     };
-    
+
     problemDetails.Extensions.Add("errors", errors);
     return problemDetails;
   }
@@ -26,11 +26,14 @@ public static class ValidationResultExtensions
   public static ProblemDetails ToProblemDetails(this NotFoundException exception)
   {
     var message = exception.Message;
-    var problemDetails = new ProblemDetails
-    {
-      Status = (int)(HttpStatusCode.NotFound),
-      Title = message
-    };
+    var problemDetails = new ProblemDetails { Status = (int)(HttpStatusCode.NotFound), Title = message };
+    return problemDetails;
+  }
+
+  public static ProblemDetails ToProblemDetails(this ConflictException exception)
+  {
+    var message = exception.Message;
+    var problemDetails = new ProblemDetails { Status = (int)(HttpStatusCode.Conflict), Title = message };
     return problemDetails;
   }
 }

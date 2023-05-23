@@ -17,6 +17,6 @@ public class GetSegments : IRequestHandler<GetSegmentsQuery, List<SegmentDto>>
   public async Task<List<SegmentDto>> Handle(GetSegmentsQuery request, CancellationToken cancellationToken)
   {
     var segments = await _repository.ListAsync(cancellationToken);
-    return segments.Select(x => new SegmentDto(x.Name)).ToList();
+    return segments.Select(x => new SegmentDto(x.Id, x.Name)).ToList();
   }
 }
