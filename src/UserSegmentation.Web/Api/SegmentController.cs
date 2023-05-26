@@ -51,6 +51,13 @@ public class SegmentController : BaseApiController
       });
   }
 
+  [HttpGet("default")]
+  public async Task<IActionResult> GetDefault()
+  {
+    var result = await _mediator.Send(new GetDefaultSegmentQuery());
+    return Ok(result);
+  }
+
   [HttpPost]
   public async Task<IActionResult> Create([FromBody] CreateSegmentCommand command)
   {

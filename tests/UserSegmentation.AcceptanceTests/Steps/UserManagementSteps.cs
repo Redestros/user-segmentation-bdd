@@ -2,6 +2,7 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using UserSegmentation.AcceptanceTests.Support;
+using UserSegmentation.Application.Segment;
 using UserSegmentation.Application.User;
 using UserSegmentation.Core.UserAggregate;
 using Xunit;
@@ -12,6 +13,7 @@ namespace UserSegmentation.AcceptanceTests.Steps;
 public class UserManagementSteps
 {
   private const string UserEndpoint = "api/user";
+  private const string SegmentEndpoint = "api/segment";
   private readonly HttpClient _httpClient;
   private readonly ScenarioContext _context;
 
@@ -41,12 +43,28 @@ public class UserManagementSteps
   public async Task ThenUsersAreCreatedSuccessfully()
   {
     var createdUsersLocations = _context.Get<List<CreatedUserInfo>>("CreatedUsersLocations");
+    var usersSegments = new List<int>();
     foreach (var info in createdUsersLocations)
     {
-      var response = await _httpClient.GetFromJsonAsync<UserDto>(info.Location); // return whole response
-      Assert.NotNull(response);
-      Assert.Equal(info.Username, response.Username);
-      Assert.Equal(info.Email, response.Email);
+      var user = await _httpClient.GetFromJsonAsync<UserDto>(info.Location); // return whole response
+      Assert.NotNull(user);
+      Assert.Equal(info.Username, user.Username);
+      Assert.Equal(info.Email, user.Email);
+      usersSegments.Add(user.SegmentId);
+    }
+    _context.Add("UsersSegments", usersSegments);
+  }
+  
+  [Then(@"users are assigned to default segment")]
+  public async Task ThenUsersAreAssignedToDefaultSegment()
+  {
+    var defaultSegment = await _httpClient.GetFromJsonAsync<SegmentDto>($"{SegmentEndpoint}/default");
+    Assert.NotNull(defaultSegment);
+
+    var usersSegments = _context.Get<List<int>>("UsersSegments");
+    foreach (var userSegment in usersSegments)
+    {
+      Assert.Equal(defaultSegment.Id, userSegment);
     }
   }
   

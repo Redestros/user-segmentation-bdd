@@ -7,6 +7,7 @@ using UserSegmentation.Infrastructure.Data;
 using UserSegmentation.Web;
 using Serilog;
 using UserSegmentation.Application;
+using UserSegmentation.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +82,9 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
     SeedData.Initialize(services);
+
+    var segmentService = services.GetRequiredService<SegmentService>();
+    await segmentService.CreateDefaultSegment();
   }
   catch (Exception ex)
   {

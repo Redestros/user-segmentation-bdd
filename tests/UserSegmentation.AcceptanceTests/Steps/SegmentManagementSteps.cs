@@ -54,8 +54,8 @@ public class SegmentManagementSteps
   [Then(@"segments are created successfully")]
   public async Task ThenSegmentsAreCreatedSuccessfully()
   {
-    var createdUsersLocations = _context.Get<List<CreatedSegmentInfo>>("CreatedSegments");
-    foreach (var info in createdUsersLocations)
+    var createdSegmentsLocations = _context.Get<List<CreatedSegmentInfo>>("CreatedSegments");
+    foreach (var info in createdSegmentsLocations)
     {
       var response = await _httpClient.GetFromJsonAsync<SegmentDto>(info.Location);
       Assert.NotNull(response);

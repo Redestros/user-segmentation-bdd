@@ -4,12 +4,12 @@ namespace UserSegmentation.Core.UserAggregate.Events;
 
 public class UsedAssignedToSegmentEvent : DomainEventBase
 {
-  public int UserId { get; private set; }
+  public User User { get; private set; }
   public int SegmentId { get; private set; }
 
-  public UsedAssignedToSegmentEvent(int userId, int segmentId)
+  public UsedAssignedToSegmentEvent(User user, int segmentId)
   {
-    UserId = userId;
+    User = user;
     SegmentId = segmentId;
   }
 }

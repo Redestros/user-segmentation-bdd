@@ -3,7 +3,6 @@
     Background: 
         Given the following segments
             | Name    |
-            | Default |
             | Silver  |
             | Gold    |
     

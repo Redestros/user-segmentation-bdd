@@ -1,4 +1,5 @@
 ﻿#region
+
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -44,15 +45,16 @@ public class UserController : BaseApiController
   public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
   {
     var response = await _mediator.Send(new CreateUserCommand(request.Username, request.Email));
-    return response.Match<IActionResult>(createdUserResponse => CreatedAtAction("Get", new { Id = createdUserResponse.Id }, null), exception =>
-    {
-      if (exception is ValidationException validationException)
+    return response.Match<IActionResult>(
+      createdUserResponse => CreatedAtAction("Get", new { createdUserResponse.Id }, null), exception =>
       {
-        return BadRequest(validationException.ToProblemDetails());
-      }
+        if (exception is ValidationException validationException)
+        {
+          return BadRequest(validationException.ToProblemDetails());
+        }
 
-      return StatusCode(500);
-    });
+        return StatusCode(500);
+      });
   }
 
   [HttpPut("{id:int}")]
@@ -71,6 +73,21 @@ public class UserController : BaseApiController
         return NotFound(userNotFoundException.ToProblemDetails());
       }
 
+      return StatusCode(500);
+    });
+  }
+
+  [HttpPut("assign-segment")]
+  public async Task<IActionResult> AssignSegment([FromBody] AssignSegmentCommand command)
+  {
+    var result = await _mediator.Send(command);
+
+    return result.Match<IActionResult>(_ => Ok(), exception =>
+    {
+      if (exception is ValidationException validationException)
+      {
+        return BadRequest(validationException.ToProblemDetails());
+      }
       return StatusCode(500);
     });
   }

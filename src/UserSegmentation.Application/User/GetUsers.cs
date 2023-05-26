@@ -24,7 +24,8 @@ public class GetUsersHandler : IRequestHandler<GetUsersQuery, List<UserDto>>
       FirstName = user.FirstName,
       LastName = user.LastName,
       Email = user.Email,
-      PhoneNumber = user.PhoneNumber
+      PhoneNumber = user.PhoneNumber,
+      SegmentId = user.SegmentId
     }).ToList();
     
   }

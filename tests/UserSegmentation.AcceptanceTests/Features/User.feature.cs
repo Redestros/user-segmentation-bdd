@@ -168,6 +168,9 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line 19
         testRunner.Then("users are created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+#line 20
+        testRunner.And("users are assigned to default segment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
@@ -180,7 +183,7 @@ namespace UserSegmentation.AcceptanceTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Users update their personal info successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 21
+#line 22
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -197,7 +200,7 @@ namespace UserSegmentation.AcceptanceTests.Features
                             "Username"});
                 table5.AddRow(new string[] {
                             "draven"});
-#line 22
+#line 23
         testRunner.Given("an existing user", ((string)(null)), table5, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -208,10 +211,10 @@ namespace UserSegmentation.AcceptanceTests.Features
                             "Draven",
                             "The executioner",
                             "28870101"});
-#line 25
+#line 26
         testRunner.When("I update his personal info with", ((string)(null)), table6, "When ");
 #line hidden
-#line 28
+#line 29
         testRunner.Then("personal infos are updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

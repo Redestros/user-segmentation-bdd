@@ -17,6 +17,7 @@ Feature: Manage users in the system
           | user1    | user1@gmail.com |
           | user2    | user2@gmail.com |
         Then users are created successfully
+        And users are assigned to default segment
 
     Scenario: Users update their personal info successfully
         Given an existing user

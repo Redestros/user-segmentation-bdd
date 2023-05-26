@@ -9,6 +9,14 @@ This project is based on [clean architecture template](https://github.com/ardali
 <a href="https://twitter.com/intent/follow?screen_name=ardalis">Ardalis
 </a>
 
+## Business rules
+- A user is identified by his username and therefore it must unique.
+- A segment is identified by it's name and therefore it must unique. 
+- When a user is created, he must be assigned to a default segment.
+- A segment is considered a default one if it's name is equal to **"default"**.
+- Only one default segment can exist.
+- The default segment is created at application startup.
+
 ## Acceptance tests
 
 You can find acceptance tests project under tests folder. They are written

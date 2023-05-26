@@ -12,12 +12,22 @@
     <PackageReference Include="Ardalis.SmartEnum" />
     <PackageReference Include="Ardalis.Specification" />
     <PackageReference Include="Autofac" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="LanguageExt.Core" />
     <PackageReference Include="MediatR" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UserSegmentation.SharedKernel\UserSegmentation.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserAggregate\Exceptions\" />
+    <Folder Include="UserAggregate\Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="UserAggregate\Exceptions\DefaultSegmentAssignmentException.cs" />
   </ItemGroup>
 
 </Project>

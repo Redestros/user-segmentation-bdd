@@ -29,7 +29,8 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, Result<UserDto>>
       FirstName = user.FirstName,
       LastName = user.LastName,
       Email = user.Email,
-      PhoneNumber = user.PhoneNumber
+      PhoneNumber = user.PhoneNumber,
+      SegmentId = user.SegmentId
     };
     return new Result<UserDto>(userDto);
   }

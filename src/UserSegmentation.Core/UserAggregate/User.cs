@@ -11,7 +11,7 @@ public class User : EntityBase, IAggregateRoot
   public string LastName { get; private set; } = "";
   public string Email { get; private set; }
   public string PhoneNumber { get; private set; } = "";
-  public int? SegmentId { get; private set; }
+  public int SegmentId { get; private set; }
 
   public User(string username, string email)
   {
@@ -38,6 +38,6 @@ public class User : EntityBase, IAggregateRoot
   public void AssignToSegment(int segmentId)
   {
     SegmentId = segmentId;
-    RegisterDomainEvent(new UsedAssignedToSegmentEvent(Id, segmentId));
+    RegisterDomainEvent(new UsedAssignedToSegmentEvent(this, segmentId));
   }
 }

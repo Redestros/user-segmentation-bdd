@@ -21,8 +21,4 @@
       <ProjectReference Include="..\..\src\UserSegmentation.Web\UserSegmentation.Web.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Setup\" />
-    </ItemGroup>
-
 </Project>

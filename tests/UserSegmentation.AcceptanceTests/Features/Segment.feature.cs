@@ -82,8 +82,6 @@ namespace UserSegmentation.AcceptanceTests.Features
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name"});
             table1.AddRow(new string[] {
-                        "Default"});
-            table1.AddRow(new string[] {
                         "Silver"});
             table1.AddRow(new string[] {
                         "Gold"});
@@ -105,7 +103,7 @@ namespace UserSegmentation.AcceptanceTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Segments List should not be empty", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 10
+#line 9
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -118,10 +116,10 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line 3
     this.FeatureBackground();
 #line hidden
-#line 11
+#line 10
         testRunner.When("I get the segment list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
+#line 11
         testRunner.Then("segment list should not be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -136,7 +134,7 @@ namespace UserSegmentation.AcceptanceTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Segment get created successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+#line 13
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -155,10 +153,10 @@ namespace UserSegmentation.AcceptanceTests.Features
                             "Platinum"});
                 table2.AddRow(new string[] {
                             "VIP"});
-#line 15
+#line 14
         testRunner.When("I create segments with the following detail", ((string)(null)), table2, "When ");
 #line hidden
-#line 19
+#line 18
         testRunner.Then("segments are created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
