@@ -1,13 +1,13 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog;
+using UserSegmentation.Application;
 using UserSegmentation.Core;
+using UserSegmentation.Core.Services;
 using UserSegmentation.Infrastructure;
 using UserSegmentation.Infrastructure.Data;
 using UserSegmentation.Web;
-using Serilog;
-using UserSegmentation.Application;
-using UserSegmentation.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,8 @@ builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Con
 
 var connectionString =
   builder.Configuration
-    .GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
+    .GetConnectionString("SQLServerConnection");
+
 
 builder.Services.AddDbContext(connectionString!);
 
@@ -94,4 +95,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-public partial class Program { }
+
+public partial class Program
+{
+}

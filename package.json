@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@notionhq/client": "^2.2.5",
+    "gherkin-parse": "^1.0.6"
+  },
+  "type": "module"
+}
