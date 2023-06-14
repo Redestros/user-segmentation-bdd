@@ -1,4 +1,4 @@
-name: Vault and GitHub demo
+name: Build and deploy
 on: [workflow_dispatch]
 jobs:
   build:
