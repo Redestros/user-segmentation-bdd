@@ -27,14 +27,16 @@ jobs:
       NOTION_SECRET: ${{ secrets.NOTION_AUTH }}
       
   deploy:
+    runs-on: self-hosted
+    steps:
     #    - name: Generate Kubeconfig and Certs
     #      run: |
     #        echo ${{ secrets.KUBECONFIG }} > k8s/config
 
-    - name: Kubernetes Deployment
-      run: |
-        cd k8s
-        kubectl apply -f .
+      - name: Kubernetes Deployment
+        run: |
+          cd k8s
+          kubectl apply -f .
 
 #    - name: Clean-Up
 #      run: |
