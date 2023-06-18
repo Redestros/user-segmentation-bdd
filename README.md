@@ -38,3 +38,21 @@ hit the run button just like this
 ![!](images/run-feature.png)
 
 or simply go to test explorer and run all tests.
+
+## Deploy on Kubernetes
+
+Go to k8s directory and create development namespace
+```shell
+kubectl create namespace development
+```
+then create application and database instances along with other manifests simply by running
+```shell
+kubectl apply -f .
+```
+
+To check the app is up and running you can port-forwarding the application service
+```shell
+kubectl port-forward -n development svc/user-segmentation 8080:80
+```
+
+and open [Swagger](http://localhost:8080/swagger/index.html) in your browser
