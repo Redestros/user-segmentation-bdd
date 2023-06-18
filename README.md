@@ -60,4 +60,8 @@ To check the app is up and running you can port-forwarding the application servi
 kubectl port-forward -n development svc/user-segmentation 8080:80
 ```
 
-and open [Swagger](http://localhost:8080/swagger/index.html) in your browser
+and open [Swagger](http://localhost:8080/swagger/index.html) in your browser.
+
+The following image represents different manifests used in the deployment
+
+![!](images/kubernetes-manifests.png)
