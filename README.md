@@ -41,7 +41,12 @@ or simply go to test explorer and run all tests.
 
 ## Deploy on Kubernetes
 
-Go to k8s directory and create development namespace
+First, go to Web project under src folder and build the docker image
+```shell
+docker build -t user-segmentation:1.0.0 .
+```
+
+Go to k8s directory under root folder and create development namespace
 ```shell
 kubectl create namespace development
 ```
