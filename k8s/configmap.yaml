@@ -5,3 +5,4 @@ metadata:
   namespace: development
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
+  ConnectionStrings__SQLServerConnection: "Server=mssql;Database=usersegmentation;User=sa;Password=superStrongSQLP@ss;TrustServerCertificate=true"

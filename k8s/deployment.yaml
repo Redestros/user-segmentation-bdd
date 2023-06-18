@@ -14,10 +14,14 @@ spec:
     spec:
       containers:
       - name: user-segmentation
-        image: user-segmentation-bdd
+        image: user-segmentation:1.0.0
+        envFrom:
+          - configMapRef:
+              name: user-segmentation
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+        
