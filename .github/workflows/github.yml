@@ -25,3 +25,18 @@ jobs:
     env:
       NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
       NOTION_SECRET: ${{ secrets.NOTION_AUTH }}
+      
+  deploy:
+    #    - name: Generate Kubeconfig and Certs
+    #      run: |
+    #        echo ${{ secrets.KUBECONFIG }} > k8s/config
+
+    - name: Kubernetes Deployment
+      run: |
+        cd k8s
+        kubectl apply -f .
+
+#    - name: Clean-Up
+#      run: |
+#        rm path/to/deploy.kubeconfig
+#        rm path/to/cert
