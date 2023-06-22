@@ -1,17 +1,25 @@
 name: Build and deploy
 on: [ workflow_dispatch ]
 jobs:
+  
   build:
     runs-on: self-hosted
-
+    
     steps:
       - uses: actions/checkout@v3
+      - name: Build
+        run: dotnet build
+  
+  test:
+    runs-on: self-hosted
+    needs: build
+    steps:
       - name: Test
         run: dotnet test --verbosity normal
   
   deploy-docs:
     runs-on: self-hosted
-    needs: build
+    needs: test
     
     steps:
       - name: Install dependencies
@@ -24,7 +32,7 @@ jobs:
   
   deploy:
     runs-on: self-hosted
-    needs: build
+    needs: test
     steps:
       - name: Generate Kubeconfig
         run: |
