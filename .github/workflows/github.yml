@@ -24,18 +24,16 @@ jobs:
   
   deploy:
     runs-on: self-hosted
+    needs: build
     steps:
-    #    - name: Generate Kubeconfig and Certs
-    #      run: |
-    #        echo ${{ secrets.KUBECONFIG }} > k8s/config
+      - name: Generate Kubeconfig
+        run: |
+          echo ${{ secrets.KUBECONFIG }} > k8s/config
 
-    - uses: actions-hub/kubectl@master
-      env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-      with:
-        args: apply -f k8s/
-        
-        #    - name: Clean-Up
-        #      run: |
-        #        rm path/to/deploy.kubeconfig
-        #        rm path/to/cert
+      - name: Deploy
+        run: |
+          kubectl --kubeconfig=k8s/config apply -f k8s/
+
+      - name: Clean-Up
+        run: |
+          rm k8s/config
