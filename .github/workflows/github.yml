@@ -1,18 +1,14 @@
 name: Build and deploy
-on: [workflow_dispatch]
+on: [ workflow_dispatch ]
 jobs:
   build:
     runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
-          
+        run: dotnet test --verbosity normal
+  
   deploy-docs:
     runs-on: self-hosted
     needs: build
@@ -25,7 +21,7 @@ jobs:
     env:
       NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
       NOTION_SECRET: ${{ secrets.NOTION_AUTH }}
-      
+  
   deploy:
     runs-on: self-hosted
     steps:
@@ -33,12 +29,13 @@ jobs:
     #      run: |
     #        echo ${{ secrets.KUBECONFIG }} > k8s/config
 
-      - name: Kubernetes Deployment
-        run: |
-          cd k8s
-          kubectl apply -f .
-
-#    - name: Clean-Up
-#      run: |
-#        rm path/to/deploy.kubeconfig
-#        rm path/to/cert
+    - uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      with:
+        args: apply -f k8s/
+        
+        #    - name: Clean-Up
+        #      run: |
+        #        rm path/to/deploy.kubeconfig
+        #        rm path/to/cert
