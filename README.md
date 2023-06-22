@@ -57,7 +57,7 @@ kubectl apply -f .
 
 To check the app is up and running you can port-forwarding the application service
 ```shell
-kubectl port-forward -n development svc/user-segmentation 8080:80
+kubectl port-forward -n development svc/user-segmentation 8080:8080
 ```
 
 and open [Swagger](http://localhost:8080/swagger/index.html) in your browser.
