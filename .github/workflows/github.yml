@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Generate Kubeconfig
         run: |
-          echo ${{ secrets.KUBECONFIG }} > k8s/config
+          echo ${{ secrets.KUBE_CONFIG }} > k8s/config
 
       - name: Deploy
         run: |
