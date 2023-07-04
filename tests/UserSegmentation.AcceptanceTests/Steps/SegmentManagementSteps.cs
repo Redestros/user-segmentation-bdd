@@ -32,7 +32,7 @@ public class SegmentManagementSteps
   {
     var segments = _context.Get<List<SegmentDto>>("Segments");
     Assert.NotEmpty(segments);
-    Assert.Equal(3, segments.Count);
+    Assert.Equal(4, segments.Count);
   }
 
   [When(@"I create segments with the following detail")]

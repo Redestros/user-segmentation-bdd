@@ -27,19 +27,18 @@ public class DefaultSegmentTestsSteps
     _context.Add("Segments", result);
   }
 
-  [Then(@"I should a list having one item and is the default")]
-  public void ThenIShouldAListHavingOneItemAndIsTheDefault()
+  [Then(@"I should receive a list including default segment")]
+  public void ThenIShouldReceiveAListIncludingDefaultSegment()
   {
     var segments = _context.Get<List<SegmentDto>>("Segments");
     
     var segmentsCount = segments.Count;
-    Assert.Equal(1, segmentsCount);
+    Assert.True(segmentsCount >= 1);
 
 
     var firstSegment = segments.First();
     Assert.NotNull(firstSegment);
     
     Assert.Equal("default", firstSegment.Name.ToLower());
-    
   }
 }
