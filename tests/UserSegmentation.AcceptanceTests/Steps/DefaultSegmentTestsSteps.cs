@@ -1,7 +1,7 @@
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
 using UserSegmentation.AcceptanceTests.Support;
-using UserSegmentation.Application.Segment;
+using UserSegmentation.Application.SegmentFeature;
 using Xunit;
 
 namespace UserSegmentation.AcceptanceTests.Steps;

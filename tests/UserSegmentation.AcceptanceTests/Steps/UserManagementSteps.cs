@@ -2,7 +2,7 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using UserSegmentation.AcceptanceTests.Support;
-using UserSegmentation.Application.Segment;
+using UserSegmentation.Application.SegmentFeature;
 using UserSegmentation.Application.User;
 using UserSegmentation.Core.UserAggregate;
 using Xunit;

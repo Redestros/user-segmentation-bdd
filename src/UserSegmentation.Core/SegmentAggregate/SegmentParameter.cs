@@ -1,19 +1,29 @@
-﻿using UserSegmentation.SharedKernel;
+﻿namespace UserSegmentation.Core.SegmentAggregate;
 
-namespace UserSegmentation.Core.SegmentAggregate;
-
-public sealed class SegmentParameter : EntityBase
+public sealed class SegmentParameter
 {
-  public string Name { get; private set; }
-  public string Value { get; private set; }
+  public int ParameterId { get; private set; }
+  
   public int SegmentId { get; private set; }
+  public string Value { get; private set; } = "";
 
-  public SegmentParameter(string name, string value, int segmentId)
+  // for EF
+  public SegmentParameter()
   {
-    Name = name;
-    Value = value;
+  }
+  public SegmentParameter(int parameterId, int segmentId, string value)
+  {
+    ParameterId = parameterId;
     SegmentId = segmentId;
+    Value = value;
   }
 
-  public Segment? Segment { get; set; }
+  public void SetValue(string value)
+  {
+    //TODO: add Validation
+    this.Value = value;
+  }
+
+  public Parameter Parameter { get; set; } = null!;
+  public Segment Segment { get; set; } = null!;
 }

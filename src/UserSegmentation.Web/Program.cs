@@ -1,8 +1,10 @@
-﻿using Ardalis.ListStartupServices;
+﻿using System.Reflection;
+using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using UserSegmentation.Application;
+using UserSegmentation.Application.Data;
 using UserSegmentation.Core;
 using UserSegmentation.Core.Services;
 using UserSegmentation.Infrastructure;
@@ -27,6 +29,10 @@ var connectionString =
 
 
 builder.Services.AddDbContext(connectionString!);
+
+builder.Services.RegisterImplementationsOfInterface(typeof(IDatabaseSeeder).Assembly, typeof(IDatabaseSeeder));
+
+builder.Services.AddSingleton<DataLoader>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

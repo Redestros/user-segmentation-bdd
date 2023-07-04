@@ -59,6 +59,11 @@ public class DefaultInfrastructureModule : Module
       .As(typeof(IReadRepository<>))
       .InstancePerLifetimeScope();
 
+    // builder
+    //   .RegisterType<SegmentRepository>()
+    //   .As<ISegmentRepository>()
+    //   .InstancePerLifetimeScope();
+
     builder
       .RegisterType<Mediator>()
       .As<IMediator>()

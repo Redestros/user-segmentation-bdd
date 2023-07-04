@@ -1,6 +1,6 @@
 ﻿using UserSegmentation.Application.Exceptions;
 
-namespace UserSegmentation.Application.Segment;
+namespace UserSegmentation.Application.SegmentFeature;
 
 public class SegmentNotFoundException : NotFoundException
 {

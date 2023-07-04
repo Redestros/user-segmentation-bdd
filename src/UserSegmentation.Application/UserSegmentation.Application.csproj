@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UserSegmentation.Core\UserSegmentation.Core.csproj" />
+    <ProjectReference Include="..\UserSegmentation.Infrastructure\UserSegmentation.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using UserSegmentation.Application.Segment;
+using UserSegmentation.Application.SegmentFeature;
 using UserSegmentation.Core.SegmentAggregate;
 using UserSegmentation.Core.UserAggregate;
 using UserSegmentation.Infrastructure.Data;

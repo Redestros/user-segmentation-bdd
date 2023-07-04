@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using UserSegmentation.Core.Services;
 
-namespace UserSegmentation.Application.Segment;
+namespace UserSegmentation.Application.SegmentFeature;
 
 public record GetDefaultSegmentQuery : IRequest<SegmentDto>;
 

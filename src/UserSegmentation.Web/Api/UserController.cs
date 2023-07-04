@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserSegmentation.Application;
+using UserSegmentation.Application.Exceptions;
 using UserSegmentation.Application.User;
 
 #endregion
@@ -41,6 +42,19 @@ public class UserController : BaseApiController
     });
   }
 
+  [HttpGet("{id:int}/parameters")]
+  public async Task<IActionResult> GetParameters(int id)
+  {
+    var result = await _mediator.Send(new GetUserParametersQuery(id));
+    return result.Match<IActionResult>(Ok, exception =>
+    {
+      if (exception is NotFoundException notFoundException)
+      {
+        return NotFound(notFoundException.ToProblemDetails());
+      }
+      return StatusCode(500);
+    });
+  }
   [HttpPost]
   public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
   {

@@ -2,7 +2,7 @@ using LanguageExt.Common;
 using MediatR;
 using UserSegmentation.SharedKernel.Interfaces;
 
-namespace UserSegmentation.Application.Segment;
+namespace UserSegmentation.Application.SegmentFeature;
 
 public record CreateSegmentCommand(string Name) : IRequest<Result<int>>;
 

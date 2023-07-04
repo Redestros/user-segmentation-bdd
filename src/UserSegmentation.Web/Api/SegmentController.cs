@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserSegmentation.Application;
-using UserSegmentation.Application.Segment;
+using UserSegmentation.Application.Exceptions;
+using UserSegmentation.Application.SegmentFeature;
 
 namespace UserSegmentation.Web.Api;
 
@@ -72,6 +73,41 @@ public class SegmentController : BaseApiController
         }
         return StatusCode(500);
       });
+  }
 
+  [HttpPost("parameter")]
+  public async Task<IActionResult> CreateSegmentParameter([FromBody] CreateSegmentParameterCommand command)
+  {
+    var result = await _mediator.Send(command);
+    return result.Match<IActionResult>(_ => Ok(),
+      exception =>
+    {
+      if (exception is NotFoundException notFoundException)
+      {
+        return NotFound(notFoundException.ToProblemDetails());
+      }
+
+      if (exception is SegmentHasParameterException conflictException)
+      {
+        return Conflict(conflictException.ToProblemDetails());
+      }
+
+      return StatusCode(500);
+    });
+  }
+
+  [HttpPut("parameter")]
+  public async Task<IActionResult> UpdateSegmentParameter([FromBody] UpdateSegmentParameterCommand command)
+  {
+    var result = await _mediator.Send(command);
+    return result.Match<IActionResult>(_ => Ok(), exception =>
+    {
+      if (exception is NotFoundException notFoundException)
+      {
+        return NotFound(notFoundException.ToProblemDetails());
+      }
+      
+      return StatusCode(500);
+    });
   }
 }

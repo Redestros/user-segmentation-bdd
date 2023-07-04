@@ -35,4 +35,17 @@ public class SegmentService
 
     return defaultSegment;
   }
+
+  public async Task OverrideParameterValue(int segmentId, int parameterId, string value)
+  {
+    var segment = await _repository.SingleOrDefaultAsync(new GetSegmentWithParameterSpec(segmentId));
+    if (segment == null)
+    {
+      throw new Exception("Segment not found");
+    }
+    
+    segment.UpdateParameterValue(parameterId, value);
+
+    await _repository.SaveChangesAsync();
+  }
 }
