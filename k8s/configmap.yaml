@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: user-segmentation
-  namespace: development
+  #namespace: development
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
   ConnectionStrings__SQLServerConnection: "Server=mssql;Database=usersegmentation;User=sa;Password=superStrongSQLP@ss;TrustServerCertificate=true"
