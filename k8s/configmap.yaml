@@ -4,5 +4,5 @@ metadata:
   name: user-segmentation
   #namespace: development
 data:
-  ASPNETCORE_ENVIRONMENT: "Development"
+  ASPNETCORE_ENVIRONMENT: "Production"
   ConnectionStrings__SQLServerConnection: "Server=mssql;Database=usersegmentation;User=sa;Password=superStrongSQLP@ss;TrustServerCertificate=true"
