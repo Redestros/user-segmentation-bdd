@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserSegmentation.Application;
 using UserSegmentation.Application.Exceptions;
 using UserSegmentation.Application.User;
+using UserSegmentation.Core.UserAggregate.Exceptions;
 
 #endregion
 
@@ -52,13 +53,17 @@ public class UserController : BaseApiController
       {
         return NotFound(notFoundException.ToProblemDetails());
       }
+
       return StatusCode(500);
     });
   }
+
   [HttpPost]
   public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
   {
-    var response = await _mediator.Send(new CreateUserCommand(request.Username, request.Email));
+    var response = await _mediator.Send(new CreateUserCommand(
+      request.Username, request.Firstname, request.Lastname, request.Email, request.PhoneNumber, request.Birthdate));
+
     return response.Match<IActionResult>(
       createdUserResponse => CreatedAtAction("Get", new { createdUserResponse.Id }, null), exception =>
       {
@@ -78,8 +83,11 @@ public class UserController : BaseApiController
       id,
       request.FirstName,
       request.LastName,
-      request.PhoneNumber);
+      request.PhoneNumber
+    );
+
     var result = await _mediator.Send(command);
+
     return result.Match<IActionResult>(_ => Ok(), exception =>
     {
       if (exception is UserNotFoundException userNotFoundException)
@@ -91,7 +99,7 @@ public class UserController : BaseApiController
     });
   }
 
-  [HttpPut("assign-segment")]
+  [HttpPut("segment")]
   public async Task<IActionResult> AssignSegment([FromBody] AssignSegmentCommand command)
   {
     var result = await _mediator.Send(command);
@@ -102,7 +110,24 @@ public class UserController : BaseApiController
       {
         return BadRequest(validationException.ToProblemDetails());
       }
+
       return StatusCode(500);
+    });
+  }
+
+  [HttpPut("financials")]
+  public async Task<IActionResult> UpdateFinancialInfo([FromBody] UpdateUserFinancialInfoCommand command)
+  {
+    var result = await _mediator.Send(command);
+
+    return result.Match<IActionResult>(_ => Ok(), exception =>
+    {
+      return exception switch
+      {
+        UserNotFoundException notFoundException => NotFound(notFoundException.ToProblemDetails()),
+        DecreaseRevenueException revenueException => BadRequest(revenueException.ToProblemDetails()),
+        _ => StatusCode(500)
+      };
     });
   }
 }

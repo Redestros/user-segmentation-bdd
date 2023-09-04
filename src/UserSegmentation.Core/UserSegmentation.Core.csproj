@@ -22,11 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UserAggregate\Exceptions\" />
-    <Folder Include="UserAggregate\Handlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="UserAggregate\Exceptions\DefaultSegmentAssignmentException.cs" />
   </ItemGroup>
 

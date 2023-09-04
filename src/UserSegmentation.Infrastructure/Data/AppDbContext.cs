@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using UserSegmentation.Infrastructure.Converters;
 using UserSegmentation.SharedKernel;
 using UserSegmentation.SharedKernel.Interfaces;
 
@@ -20,6 +21,14 @@ public class AppDbContext : DbContext
   {
     base.OnModelCreating(modelBuilder);
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+  }
+
+  protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+  {
+    base.ConfigureConventions(builder);
+
+    builder.Properties<DateOnly>()
+      .HaveConversion<DateOnlyConverter>();
   }
 
   public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
