@@ -1,10 +1,11 @@
-﻿using UserSegmentation.Core.SegmentAggregate;
+﻿using UserSegmentation.Core.Interfaces;
+using UserSegmentation.Core.SegmentAggregate;
 using UserSegmentation.Core.SegmentAggregate.Specifications;
 using UserSegmentation.SharedKernel.Interfaces;
 
 namespace UserSegmentation.Core.Services;
 
-public class SegmentService
+public class SegmentService : ISegmentService
 {
   private readonly IRepository<Segment> _repository;
 
@@ -34,6 +35,17 @@ public class SegmentService
     }
 
     return defaultSegment;
+  }
+
+  public async Task<Segment> Get(string name)
+  {
+    var segment = await _repository.SingleOrDefaultAsync(new GetSegmentByNameSpec(name));
+    if (segment == null)
+    {
+      throw new Exception("Segment not found");
+    }
+
+    return segment;
   }
 
   public async Task OverrideParameterValue(int segmentId, int parameterId, string value)

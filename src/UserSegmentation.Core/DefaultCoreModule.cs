@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using UserSegmentation.Core.Interfaces;
 using UserSegmentation.Core.Services;
+using UserSegmentation.Core.UserAggregate.SegmentationRules;
 
 namespace UserSegmentation.Core;
 
@@ -12,7 +13,13 @@ public class DefaultCoreModule : Module
   {
     var services = new ServiceCollection();
 
-    services.AddScoped<ICreateUserService, CreateUserService>();
+    services.AddScoped<ISegmentService, SegmentService>();
+
+    services.AddScoped<ISegmentAssignmentRule, DefaultRule>();
+    services.AddScoped<ISegmentAssignmentRule, SalaryBasedRule>();
+
+    services.AddScoped<SegmentAssignmentEngine>();
+    
     builder.Populate(services);
     
     base.Load(builder);
