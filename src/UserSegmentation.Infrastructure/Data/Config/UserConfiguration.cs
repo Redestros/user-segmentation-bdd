@@ -11,5 +11,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     builder.HasKey(u => u.Id);
 
     builder.HasIndex(user => user.Username).IsUnique();
+
+    builder.Property(user => user.GrossAnnualRevenue)
+      .HasPrecision(10, 2);
   }
 }

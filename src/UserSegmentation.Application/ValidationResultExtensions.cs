@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using UserSegmentation.Application.Exceptions;
+using UserSegmentation.Core.UserAggregate.Exceptions;
 
 namespace UserSegmentation.Application;
 
@@ -34,6 +35,13 @@ public static class ValidationResultExtensions
   {
     var message = exception.Message;
     var problemDetails = new ProblemDetails { Status = (int)(HttpStatusCode.Conflict), Title = message };
+    return problemDetails;
+  }
+
+  public static ProblemDetails ToProblemDetails(this DecreaseRevenueException exception)
+  {
+    var message = exception.Message;
+    var problemDetails = new ProblemDetails { Status = (int)(HttpStatusCode.BadRequest), Title = message };
     return problemDetails;
   }
 }

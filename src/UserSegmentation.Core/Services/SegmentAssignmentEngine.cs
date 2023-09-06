@@ -6,31 +6,32 @@ using UserSegmentation.SharedKernel.Interfaces;
 
 namespace UserSegmentation.Core.Services;
 
-public class CreateUserService : ICreateUserService
+public class SegmentAssignmentEngine
 {
-  private readonly IRepository<User> _userRepository;
+  private readonly IEnumerable<ISegmentAssignmentRule> _rules;
   private readonly IRepository<Segment> _segmentRepository;
-
-  public CreateUserService(IRepository<User> userRepository, IRepository<Segment> segmentRepository)
+  
+  public SegmentAssignmentEngine(IEnumerable<ISegmentAssignmentRule> rules, IRepository<Segment> segmentRepository)
   {
-    _userRepository = userRepository;
+    _rules = rules;
     _segmentRepository = segmentRepository;
   }
 
-  public async Task<int> CreateUser(string username, string email)
+  public async Task<int> GetSegmentToAssign(User user)
   {
     var defaultSegment = await _segmentRepository.FirstOrDefaultAsync(new DefaultSegmentSpecification());
-
     if (defaultSegment == null)
     {
-      throw new Exception("Default segment is null");
+      throw new Exception();
+    }
+    
+    var segmentId = defaultSegment.Id;
+    
+    foreach (var rule in _rules.OrderBy(rule => rule.Order()))
+    {
+      segmentId = await rule.Evaluate(user);
     }
 
-    var user = new User(username, email);
-    user.AssignToSegment(defaultSegment.Id);
-
-    await _userRepository.AddAsync(user);
-    return user.Id;
+    return segmentId;
   }
-
 }

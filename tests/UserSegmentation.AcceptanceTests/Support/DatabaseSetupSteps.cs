@@ -26,7 +26,8 @@ public class DatabaseSetupSteps
     var createdUsers = new List<User>();
     foreach (var user in users)
     {
-      var createdUserEntry = _appDbContext?.Set<User>().Add(new User(user.Username, user.Email));
+      var createdUserEntry = _appDbContext?.Set<User>().Add(new User(
+        user.Username, "", "", "", "", DateOnly.FromDateTime(DateTime.Today)));
       if (createdUserEntry != null)
       {
         createdUsers.Add(createdUserEntry.Entity);
