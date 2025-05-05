@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using UserSegmentation.Core.Services;
+using UserSegmentation.Core.Interfaces;
 
 namespace UserSegmentation.Application.SegmentFeature;
 
@@ -7,9 +7,9 @@ public record GetDefaultSegmentQuery : IRequest<SegmentDto>;
 
 public class GetDefaultSegmentHandler : IRequestHandler<GetDefaultSegmentQuery, SegmentDto>
 {
-  private readonly SegmentService _segmentService;
+  private readonly ISegmentService _segmentService;
 
-  public GetDefaultSegmentHandler(SegmentService segmentService)
+  public GetDefaultSegmentHandler(ISegmentService segmentService)
   {
     _segmentService = segmentService;
   }

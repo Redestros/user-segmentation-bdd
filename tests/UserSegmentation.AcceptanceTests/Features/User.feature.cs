@@ -155,13 +155,25 @@ namespace UserSegmentation.AcceptanceTests.Features
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Username",
-                            "Email"});
+                            "Email",
+                            "Firstname",
+                            "Lastname",
+                            "Birthdate",
+                            "PhoneNumber"});
                 table3.AddRow(new string[] {
                             "user1",
-                            "user1@gmail.com"});
+                            "user1@gmail.com",
+                            "user",
+                            "one",
+                            "01/01/1998",
+                            "25994801"});
                 table3.AddRow(new string[] {
                             "user2",
-                            "user2@gmail.com"});
+                            "user2@gmail.com",
+                            "user",
+                            "two",
+                            "02/03/1998",
+                            "25994801"});
 #line 15
         testRunner.When("I create users with the following details", ((string)(null)), table3, "When ");
 #line hidden
