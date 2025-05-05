@@ -17,18 +17,6 @@ public class GetUsersHandler : IRequestHandler<GetUsersQuery, List<UserDto>>
   public async Task<List<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
   {
     var users = await _repository.ListAsync(cancellationToken);
-    return users.Select(user => new UserDto
-    {
-      Id = user.Id,
-      Username = user.Username,
-      FirstName = user.FirstName,
-      LastName = user.LastName,
-      Email = user.Email,
-      PhoneNumber = user.PhoneNumber,
-      GrossAnnualRevenue = user.GrossAnnualRevenue,
-      SocialScore = user.SocialScore,
-      SegmentId = user.SegmentId
-    }).ToList();
-    
+    return users.Select(UserMapper.Map).ToList();
   }
 }
