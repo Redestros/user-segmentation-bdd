@@ -12,4 +12,4 @@ When a user's financials are updated, he will be automatically assigned to a seg
       | 1980-01-01 | 34000              | 80          | Default |
       | 2006-01-01 | 34000              | 80          | Default |
       | 1980-01-01 | 34000              | 90          | Silver  |
-      | 1980-01-01 | 64000              | 100         | Gold  |
+      | 1980-01-01 | 64000              | 100         | Gold    |
