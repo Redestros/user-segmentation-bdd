@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using LanguageExt.Common;
 using MediatR;
+using UserSegmentation.Core.Services;
 using UserSegmentation.SharedKernel.Interfaces;
 
 namespace UserSegmentation.Application.User;
@@ -26,12 +27,14 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<Creat
 {
   private readonly IRepository<Core.UserAggregate.User> _repository;
   private readonly IValidator<Core.UserAggregate.User> _validator;
+  private readonly SegmentAssignmentEngine _segmentAssignmentEngine;
 
   public CreateUserHandler(IRepository<Core.UserAggregate.User> repository,
-    IValidator<Core.UserAggregate.User> validator)
+    IValidator<Core.UserAggregate.User> validator, SegmentAssignmentEngine segmentAssignmentEngine)
   {
     _repository = repository;
     _validator = validator;
+    _segmentAssignmentEngine = segmentAssignmentEngine;
   }
 
   public async Task<Result<CreateUserResponse>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
@@ -53,6 +56,12 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<Creat
     }
 
     var createdUser = await _repository.AddAsync(user, cancellationToken);
+    await _repository.SaveChangesAsync(cancellationToken);
+    
+    var segmentIdToAssign = await _segmentAssignmentEngine.GetSegmentToAssign(user);
+    user.AssignToSegment(segmentIdToAssign);
+    
+    await _repository.SaveChangesAsync(cancellationToken);
     return new CreateUserResponse(createdUser.Id);
   }
 }
