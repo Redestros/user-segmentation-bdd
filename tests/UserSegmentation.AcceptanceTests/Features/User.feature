@@ -13,9 +13,9 @@ Feature: Manage users in the system
 
     Scenario: Users get created successfully
         When I create users with the following details
-          | Username | Email           |
-          | user1    | user1@gmail.com |
-          | user2    | user2@gmail.com |
+          | Username | Email           | Firstname | Lastname | Birthdate  | PhoneNumber |
+          | user1    | user1@gmail.com | user      | one      | 01/01/1998 | 25994801    |
+          | user2    | user2@gmail.com | user      | two      | 02/03/1998 | 25994801    |
         Then users are created successfully
         And users are assigned to default segment
 
