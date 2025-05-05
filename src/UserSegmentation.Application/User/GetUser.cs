@@ -22,18 +22,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, Result<UserDto>>
       return new Result<UserDto>(new UserNotFoundException(request.Id));
     }
 
-    var userDto = new UserDto()
-    {
-      Id = user.Id,
-      Username = user.Username,
-      FirstName = user.FirstName,
-      LastName = user.LastName,
-      Email = user.Email,
-      PhoneNumber = user.PhoneNumber,
-      GrossAnnualRevenue = user.GrossAnnualRevenue,
-      SocialScore = user.SocialScore,
-      SegmentId = user.SegmentId
-    };
+    var userDto = UserMapper.Map(user);
     return new Result<UserDto>(userDto);
   }
 }

@@ -14,20 +14,18 @@ public class ApplicationFactory : WebApplicationFactory<Program>
   {
     builder.ConfigureServices(services =>
     {
-      var dbContextDescriptor = services.SingleOrDefault(
-        d => d.ServiceType ==
-             typeof(DbContextOptions<AppDbContext>));
+      var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType ==
+                                                              typeof(DbContextOptions<AppDbContext>));
 
-      if (dbContextDescriptor != null)
+      if ( dbContextDescriptor != null )
       {
         services.Remove(dbContextDescriptor);
       }
 
-      var dbConnectionDescriptor = services.SingleOrDefault(
-        d => d.ServiceType ==
-             typeof(DbConnection));
+      var dbConnectionDescriptor = services.SingleOrDefault(d => d.ServiceType ==
+                                                                 typeof(DbConnection));
 
-      if (dbConnectionDescriptor != null)
+      if ( dbConnectionDescriptor != null )
       {
         services.Remove(dbConnectionDescriptor);
       }
@@ -46,7 +44,7 @@ public class ApplicationFactory : WebApplicationFactory<Program>
         var connection = container.GetRequiredService<DbConnection>();
         options.UseSqlite(connection);
       });
-      
+
       builder.UseEnvironment("Development");
     });
   }

@@ -43,6 +43,13 @@ public class UserController : BaseApiController
     });
   }
 
+  [HttpGet("{username}")]
+  public async Task<IActionResult> SearchByUsername(string username)
+  {
+    var result = await _mediator.Send(new SearchUserQuery(username));
+    return Ok(result);
+  }
+
   [HttpGet("{id:int}/parameters")]
   public async Task<IActionResult> GetParameters(int id)
   {
@@ -115,9 +122,10 @@ public class UserController : BaseApiController
     });
   }
 
-  [HttpPut("financials")]
-  public async Task<IActionResult> UpdateFinancialInfo([FromBody] UpdateUserFinancialInfoCommand command)
+  [HttpPut("{id:int}/financials")]
+  public async Task<IActionResult> UpdateFinancialInfo(int id, [FromBody] UpdateUserFinancialsRequest request)
   {
+    var command = new UpdateUserFinancialsCommand(id, request.GrossAnnualRevenue, request.SocialScore);
     var result = await _mediator.Send(command);
 
     return result.Match<IActionResult>(_ => Ok(), exception =>

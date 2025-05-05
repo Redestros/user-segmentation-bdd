@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using JetBrains.Annotations;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using UserSegmentation.AcceptanceTests.Support;
@@ -32,6 +33,7 @@ public class UserManagementSteps
     {
       var response = await _httpClient.PostAsJsonAsync(UserEndpoint, request);
       var location = response.Headers.Location?.AbsoluteUri;
+      Assert.True(response.IsSuccessStatusCode);
       Assert.NotNull(location);
       createdUsers.Add(new CreatedUserInfo(location, request.Username, request.Email));
     }
@@ -115,5 +117,24 @@ public class UserManagementSteps
   }
   private record CreatedUserInfo(string Location, string Username, string Email);
 
+  [UsedImplicitly]
   private record UserRepresentation(string Username);
+  
+  
+  [When(@"I update his financial info with")]
+  public async Task WhenIUpdateHisFinancialInfoWith(Table table)
+  {
+    var userId = _context.Get<int>("userId");
+    var updateRequest = table.CreateInstance<UpdateUserFinancialsRequest>();
+    _context.Add("updateUserFinancials", updateRequest);
+    await _httpClient.PutAsJsonAsync($"{UserEndpoint}/{userId}/financials", updateRequest);
+
+  }
+
+  [Then(@"financial info are updated successfully")]
+  public void ThenFinancialInfoAreUpdatedSuccessfully(Table table)
+  {
+    
+  }
+
 }
