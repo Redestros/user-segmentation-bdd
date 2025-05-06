@@ -117,7 +117,7 @@ public class UserManagementSteps
   }
   private record CreatedUserInfo(string Location, string Username, string Email);
 
-  [UsedImplicitly]
+  // [UsedImplicitly]
   private record UserRepresentation(string Username);
   
   
