@@ -5,6 +5,9 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UserSegmentation.Infrastructure.Data;
+using UserSegmentation.SharedKernel;
+using UserSegmentation.SharedKernel.Interfaces;
+using UserSegmentation.Web;
 
 namespace UserSegmentation.AcceptanceTests.Support;
 
@@ -38,12 +41,34 @@ public class ApplicationFactory : WebApplicationFactory<Program>
 
         return connection;
       });
+      
+      services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<WebMarker>());
+
+      services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+      
+      var descriptorsToRemove = services
+        .Where(d => d.ServiceType.FullName?.Contains("AppDbContext") == true ||
+                    d.ServiceType.FullName?.Contains("DbContextOptions") == true)
+        .ToList();
+
+      foreach (var descriptor in descriptorsToRemove)
+      {
+        services.Remove(descriptor);
+      }
 
       services.AddDbContext<AppDbContext>((container, options) =>
       {
         var connection = container.GetRequiredService<DbConnection>();
         options.UseSqlite(connection);
       });
+
+      var sp = services.BuildServiceProvider();
+
+      using (var scope = sp.CreateScope())
+      {
+          var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+          db.Database.EnsureCreated();
+      }
 
       builder.UseEnvironment("Development");
     });

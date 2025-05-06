@@ -2,7 +2,7 @@
 
 namespace UserSegmentation.Core.SegmentAggregate.Specifications;
 
-public sealed class SegmentByNameSpec : Specification<Segment>, ISingleResultSpecification
+public sealed class SegmentByNameSpec : Specification<Segment>, ISingleResultSpecification<Segment>
 {
   public SegmentByNameSpec(string segmentName)
   {

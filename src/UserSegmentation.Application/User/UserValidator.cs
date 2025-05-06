@@ -32,7 +32,7 @@ public class CreateUserValidator : AbstractValidator<Core.UserAggregate.User>
   }
 }
 
-internal sealed class GetUsername : Specification<Core.UserAggregate.User, int?>, ISingleResultSpecification
+internal sealed class GetUsername : Specification<Core.UserAggregate.User, int?>, ISingleResultSpecification<Core.UserAggregate.User>
 {
   public GetUsername(string username)
   {
